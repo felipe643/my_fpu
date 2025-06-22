@@ -1,0 +1,115 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity tb is
+end entity;
+
+architecture tb of tb is
+  signal reset      : std_logic := '0';
+  signal clk_100kHz : std_logic := '0';
+  signal op_a       : std_logic_vector(31 downto 0);
+  signal op_b       : std_logic_vector(31 downto 0);
+  signal data_out   : std_logic_vector(31 downto 0);
+  signal status_out : std_logic_vector(3 downto 0);
+	
+  constant clk_p : time := 10 ns;
+
+begin
+
+uut: entity work.fpu
+    port map (
+      reset      => reset,
+      clk100 => clk_100kHz,
+      op_a       => op_a,
+      op_b       => op_b,
+      data_out   => data_out,
+      status_out => status_out
+    );
+
+
+clk_process : process
+begin
+	while true loop
+      		clk_100kHz <= not clk_100kHz;
+      		wait for clk_p / 2;
+    	end loop;
+end process;
+
+teste : process
+begin
+	reset <= '1';
+
+	op_a <= "001111111111" & "10000000000000000000"; 
+	op_b <= "001110000110" & "11000000000000000000"; 
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111110" & "00000000000000000000"; -- +0.5
+	op_b <= "001111111110" & "00000000000000000000";
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111110" & "10000000000000000000"; -- 
+	op_b <= "101111111101" & "11000000000000000000"; -- subtracao entre dois numeros parecidos
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "000000000000" & "00000000000000000000";
+	op_b <= "100000000000" & "10000000000000000000";
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "011111111111" & "10000000000000000000";
+	op_b <= "011111111111" & "10000000000000000000";
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111111" & "10000000000000000000";
+	op_b <= "000000000000" & "00000000000000000000";
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111111" & "11111111111111111111"; 
+	op_b <= "101111111100" & "11000000000000000000"; 
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111111" & "11111111111111111111"; 
+	op_b <= "001111111111" & "11111111111111111111"; 
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111111" & "11111111111111111111";
+	op_b <= "101111111000" & "11111111111111111110"; 
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+	op_a <= "001111111111" & "10000000000000000000";
+	op_b <= "001111111100" & "11110111010011011001";
+	wait for 1000 ns;
+	reset <= '0';
+	wait for clk_p;
+	reset <= '1';
+
+  end process;
+end architecture;
+
