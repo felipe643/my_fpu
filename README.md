@@ -12,7 +12,7 @@ no caso o recebido foi
   8 + ((2+4+1+0+3+2+7+1+3) mod 4)
   o que deu 11
   sendo 11 o numero do expoente.
-  a partir desse numero consegui o a matisa por 31 - 11 o que deu 20 para mantisa
+  a partir desse numero consegui o a mantisa por 31 - 11 o que deu 20 para mantisa
   e 1 padrão de uma fpu
 
 # limites
