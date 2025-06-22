@@ -33,7 +33,7 @@ Simulações feitas com ferramentas como ModelSim/Quartus
 
 # Status do Projeto
 Estrutura básica implementada.
-Finalizado, com a calculadora funcionando corretamente, para os textes.
+Finalizado, com a calculadora funcionando corretamente, para os testes.
 Documentação concluída
 
 # Autor
